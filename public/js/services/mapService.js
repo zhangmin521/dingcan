@@ -79,6 +79,7 @@ define(['app'], function (app) {
             },{enableHighAccuracy: true})
             return defer.promise;
         }
+        
         return {loadMapAPI, getAroundAddrs, getPointByAddr, getCurrentAddrs}
     }])
 })

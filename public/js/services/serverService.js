@@ -131,9 +131,38 @@ define(['app'], function (app) {
                     })
                 return defer.promise;
             }
-
+            //获得轮播图
+            function getBanners() {
+                var defer = $q.defer()
+                $http({
+                    url : '/index/banners',
+                    method : 'get'
+                })
+                    .success(function (result) {
+                        defer.resolve(result.data)
+                    })
+                    .error(function () {
+                        alert('获取轮播图失败')
+                    })
+                return defer.promise
+            }
+            //获得菜品、商家信息、购物车等
+            function getData() {
+                var defer = $q.defer()
+                $http({
+                    url : '/index/data',
+                    method : 'get'
+                })
+                    .success(function (result) {
+                        defer.resolve(result.data)
+                    })
+                    .error(function () {
+                        alert('获取菜品信息失败')
+                    })
+                return defer.promise
+            }
             return {sendCode, login, feedback, addAddr, getAddrsByUserId,
-                deleteAddr, updateAddr}
+                deleteAddr, updateAddr, getBanners, getData}
     }])
 })
 
