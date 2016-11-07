@@ -12,6 +12,7 @@ require.config({
         'angular' : 'libs/angular',
         'angular-messages' : 'libs/angular-messages',
         'angular-route' : 'libs/angular-route',
+        'Swiper' : 'libs/swiper.min',
 
         //controllers
         'app' : 'controllers/app',
@@ -47,6 +48,9 @@ require.config({
         'angular-route' : {
             exports : 'angular-route',
             deps : ['angular']
+        },
+        'Swiper' : {
+            exports : 'Swiper'
         }
     }
 })
@@ -57,7 +61,7 @@ require([
     'HomeCtrl', 'PersonalCtrl', 'appRoute','AddNewAddrCtrl',
     'AddrManageCtrl','ChooseCoordinateCtrl', 'FeedbackCtrl',
     'LocationAddrCtrl', 'LoginCtrl', 'OrderConfirmCtrl',
-    'serverService', 'storageUtil', 'mapService'
+    'serverService', 'storageUtil', 'mapService', 'Swiper'
 ], function (angular) {
     angular.bootstrap(document, ['dcApp'])
 })

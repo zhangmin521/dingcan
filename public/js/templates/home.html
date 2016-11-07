@@ -1,4 +1,5 @@
 <link rel="stylesheet" href="css/home.css">
+<link rel="stylesheet" href="css/swiper.min.css">
 
 <div id="homeDiv">
 	<!-- 头部 #start -->
@@ -18,14 +19,9 @@
 	<div class="banner">
 		<div class="swiper-container" id="bannerSwiper">
 			<div class="swiper-wrapper" id="slides">
-				<div class="swiper-slide">
+				<div class="swiper-slide" ng-repeat="banner in banners">
 					<a href="#">
-						<img src="img/bar1.jpg"/>
-					</a>
-				</div>
-				<div class="swiper-slide">
-					<a href="#">
-						<img src="img/bar2.png"/>
+						<img src="img/default.jpg" ng-src="{{banner.img_src}}"/>
 					</a>
 				</div>
 			</div>
@@ -39,50 +35,24 @@
 	<div class="wrap meals">
 		<div id="info">
 			<ul>
-				<li >
+				<li ng-repeat="meal in data.meals">
 					<div class="meal-item">
 						<a class="img meal-img" href="javascript:">
-							<img src="img/default.jpg" />
+							<img src="img/default.jpg" ng-src="{{meal.picture}}"/>
 						</a>
-						<div class="meal-name">熏鸡肉沙拉</div>
-						<div class="sales">月售211份</div>
+						<div class="meal-name" ng-bind="meal.mealName"></div>
+						<div class="sales" ng-bind="'月售'+meal.sales+'份'"></div>
 						<div class="buy">
 							<div class="price">
 								&yen;
-								<span class="ml2 f150 fb">23</span>
+								<span class="ml2 f150 fb" ng-bind="meal.price"></span>
 								<span>
-									<s>&yen;56</s>
+									<s ng-bind="'&yen;'+meal.originalPrice"></s>
 								</span>
 							</div>
 							<div class="option-cart" >
 								<div class="btn-cart in fr">
-									<a class="jian"></a>
-									<span class="count">0</span>
-									<a class="jia"></a>
-								</div>
-							</div>
-						</div>
-					</div>
-				</li>
-				<li >
-					<div class="meal-item">
-						<a class="img meal-img" href="javascript:">
-							<img src="img/default.jpg" />
-						</a>
-						<div class="meal-name">熏鸡肉沙拉</div>
-						<div class="sales">月售211份</div>
-						<div class="buy">
-							<div class="price">
-								&yen;
-								<span class="ml2 f150 fb">23</span>
-								<span >
-									<s>&yen;56</s>
-								</span>
-							</div>
-							<div class="option-cart">
-								<div
-										class="btn-cart in fr">
-									<a class="jian"></a>
+									<a class="jian" ></a>
 									<span class="count">0</span>
 									<a class="jia"></a>
 								</div>
