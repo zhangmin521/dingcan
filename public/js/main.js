@@ -30,6 +30,7 @@ require.config({
 
         //services
         'serverService' : 'services/serverService',
+        'mapService' : 'services/mapService',
 
         //utils
         'storageUtil' : 'utils/storageUtil'
@@ -56,7 +57,7 @@ require([
     'HomeCtrl', 'PersonalCtrl', 'appRoute','AddNewAddrCtrl',
     'AddrManageCtrl','ChooseCoordinateCtrl', 'FeedbackCtrl',
     'LocationAddrCtrl', 'LoginCtrl', 'OrderConfirmCtrl',
-    'serverService', 'storageUtil'
+    'serverService', 'storageUtil', 'mapService'
 ], function (angular) {
     angular.bootstrap(document, ['dcApp'])
 })

@@ -1,23 +1,28 @@
 define(['app', 'storageUtil'], function (app, storageUtil) {
-    return app.controller('ChooseCoordinateCtrl', ['$scope', '$rootScope', '$http',
-        function ($scope, $rootScope, $http) {
+    return app.controller('ChooseCoordinateCtrl',
+        ['$scope', '$rootScope', '$http', 'mapService',
+        function ($scope, $rootScope, $http, mapService) {
             $rootScope.appTitle = '地图选择地址'
 
-            loadJScript();
-
-            //百度地图API功能
-            function loadJScript() {
-                var script = document.createElement("script");
-                script.type = "text/javascript";
-                script.src = "http://api.map.baidu.com/api?v=2.0&ak=yRrFVK2roUIGRlpcsv7pueLjvU7xO9FE&callback=init";
-                document.getElementById('mapDiv').appendChild(script);
-            }
+            mapService.loadMapAPI('mapDiv', 'init')
 
             var map;
             //添加全局函数
             window.init = function () {
+
+                //默认如果没有值时地址坐标显示天安门
+                var lng = '116.404'
+                var lat = '39.915'
+                //从session里获得input的地址
+                var inputAddr = storageUtil.session.getItem(storageUtil.KEYS.INPUT_ADDR)
+                //如果有值并且有坐标，就显示坐标周围的地址列表
+                if(inputAddr!=null && inputAddr.lng){
+                    lng = inputAddr.lng
+                    lat = inputAddr.lat
+                }
+
                 map = new BMap.Map("cc_map");            // 创建Map实例
-                var point = new BMap.Point(116.404, 39.915); // 创建点坐标
+                var point = new BMap.Point(lng, lat); // 创建点坐标
                 map.centerAndZoom(point,15);
                 map.setCurrentCity("北京");
 
@@ -36,25 +41,10 @@ define(['app', 'storageUtil'], function (app, storageUtil) {
                 //得到中心点坐标对象
                 var cPoint = map.getCenter();
                 //根据cPoint得到附近的多个地址的列表
-                var url = 'http://api.map.baidu.com/geocoder/v2/?' +
-                    'ak=yRrFVK2roUIGRlpcsv7pueLjvU7xO9FE&callback=JSON_CALLBACK' +
-                    '&location='+cPoint.lat+','+cPoint.lng+'&output=json&pois=1';
-                $http.jsonp(url)
-                    .success(function (data) {
-                        //console.log(data);
-                        var result = data.result;
-                        var cityId = result.cityCode;
-                        var mapAddrs = [];
-                        result.pois.forEach(function (item) {
-                            var address = item.name;
-                            var lng = item.point.x;
-                            var lat = item.point.y;
-                            mapAddrs.push({address, lng, lat, cityId})
-                        })
+
+                mapService.getAroundAddrs(cPoint)
+                    .then(function (mapAddrs) {
                         $scope.mapAddrs = mapAddrs;
-                    })
-                    .error(function () {
-                        alert('请求地图地址失败!');
                     })
             }
 
@@ -67,18 +57,11 @@ define(['app', 'storageUtil'], function (app, storageUtil) {
                 */
                 var name = $scope.searchName && $scope.searchName.trim()
                 if(!!name) {
-                    var url = 'http://api.map.baidu.com/geocoder/v2/?' +
-                        'address=北京'+name+'&output=json&ak=yRrFVK2roUIGRlpcsv7pueLjvU7xO9FE&callback=JSON_CALLBACK';
-                    $http.jsonp(url)
-                        .success(function (data) {
-                            console.log(data);
-                            var location = data.result.location;
-                            var point = new BMap.Point(location.lng, location.lat);
+
+                    mapService.getPointByAddr(name)
+                        .then(function (point) {
                             map.centerAndZoom(point,15);
                             showList();
-                        })
-                        .error(function () {
-                            alert('请求地图地址失败!');
                         })
                 }
             }
