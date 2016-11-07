@@ -5,7 +5,6 @@ define(['app'], function (app) {
 
             mapService.loadMapAPI('homeDiv', 'init')
 
-
             window.init = function () {
                 mapService.getCurrentAddrs()
                     .then(function (address) {
