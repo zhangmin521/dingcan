@@ -8,7 +8,7 @@ define(['app'], function (app) {
             window.init = function () {
                 mapService.getCurrentAddrs()
                     .then(function (address) {
-
+                        console.log(address)
                     })
             }
     }])

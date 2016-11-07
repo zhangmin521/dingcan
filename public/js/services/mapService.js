@@ -9,7 +9,7 @@ define(['app'], function (app) {
         function loadMapAPI(containterId, callback) {
             var script = document.createElement("script");
             script.type = "text/javascript";
-            script.src = "http://api.map.baidu.com/api?v=2.0&ak=KM2xAiiLZnVowp1KzcNHeqSxziOXYXGL&callback="+callback;
+            script.src = "http://api.map.baidu.com/api?v=2.0&ak=FXK3X6TOxRf4NAebDoA0hGmFPx8eN68F&callback="+callback;
             document.getElementById(containterId).appendChild(script);
         }
         /**
@@ -64,7 +64,15 @@ define(['app'], function (app) {
             geolocation.getCurrentPosition(function(r){
                 //关于状态码，BMAP_STATUS_SUCCESS	检索成功。对应数值“0”。
                 if(this.getStatus() == BMAP_STATUS_SUCCESS){
-                    alert('您的位置：'+r.point.lng+','+r.point.lat);
+                    // alert('您的位置：'+r.point.lng+','+r.point.lat);
+                    var geoc = new BMap.Geocoder();
+                    var point = r.point;
+                    geoc.getLocation(point, function(rs){
+                        var addComp = rs.addressComponents;
+                        alert(addComp.province + ", " + addComp.city + ", " + addComp.district + ", " + addComp.street + ", " + addComp.streetNumber);
+                        var name = addComp.province + addComp.city + addComp.district + addComp.street + addComp.streetNumber
+                        defer.resolve(name)
+                    });
                 } else {
                     alert('获取地址失败');
                 }
