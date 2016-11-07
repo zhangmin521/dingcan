@@ -57,7 +57,21 @@ define(['app'], function (app) {
                 })
             return defer.promise
         }
-        return {loadMapAPI, getAroundAddrs, getPointByAddr}
+
+        function getCurrentAddrs() {
+            var defer = $q.defer()
+            var geolocation = new BMap.Geolocation();
+            geolocation.getCurrentPosition(function(r){
+                //关于状态码，BMAP_STATUS_SUCCESS	检索成功。对应数值“0”。
+                if(this.getStatus() == BMAP_STATUS_SUCCESS){
+                    alert('您的位置：'+r.point.lng+','+r.point.lat);
+                } else {
+                    alert('获取地址失败');
+                }
+            },{enableHighAccuracy: true})
+            return defer.promise;
+        }
+        return {loadMapAPI, getAroundAddrs, getPointByAddr, getCurrentAddrs}
     }])
 })
 
