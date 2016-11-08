@@ -58,7 +58,7 @@ define(['app'], function (app) {
             return defer.promise
         }
 
-        function getCurrentAddr() {
+        function getCurrentAddrs() {
             var defer = $q.defer()
             var geolocation = new BMap.Geolocation();
             geolocation.getCurrentPosition(function(r){
@@ -79,8 +79,7 @@ define(['app'], function (app) {
             },{enableHighAccuracy: true})
             return defer.promise;
         }
-        
-        return {loadMapAPI, getAroundAddrs, getPointByAddr, getCurrentAddr}
+
+        return {loadMapAPI, getAroundAddrs, getPointByAddr, getCurrentAddrs}
     }])
 })
-
