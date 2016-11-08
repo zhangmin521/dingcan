@@ -13,7 +13,8 @@ define(function () {
             USER : '_user_',   //用户
             EDIT_ADDR : '_edit_addr_', //修改的地址
             MAP_ADDR : '_map_addr_', //地图定位的地址
-            INPUT_ADDR : '_input_addr_' //用户输入的地址
+            INPUT_ADDR : '_input_addr_', //用户输入的地址
+            CART : '_cart_'//购物车
         },
 
         session : {

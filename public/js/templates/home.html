@@ -51,10 +51,10 @@
 								</span>
 							</div>
 							<div class="option-cart" >
-								<div class="btn-cart in fr">
-									<a class="jian" ></a>
-									<span class="count">0</span>
-									<a class="jia"></a>
+								<div class="btn-cart in fr" ng-class="{incart:meal.count>0}">
+									<a class="jian" ng-click="updateMealCount(false, meal)"></a>
+									<span class="count" ng-bind="meal.count"></span>
+									<a class="jia" ng-click="updateMealCount(true, meal)"></a>
 								</div>
 							</div>
 						</div>
@@ -82,29 +82,29 @@
 				}
 			</style>
 			<!-- 购物车图标-->
-			<div class="icon-cart-box" >
-				<div class="cart-num" id="total_count">1</div>
-				<div class="icon-cart">
+			<div class="icon-cart-box">
+				<div class="cart-num" id="total_count" ng-bind="cart.totalCount"></div>
+				<div class="icon-cart" ng-click="changeState()">
 					<a class="btn-cart-pop">
 					</a>
 				</div>
 			</div>
-			<div class="table w100 cartItems" id="cartItems" >
+			<div class="table w100 cartItems" id="cartItems" ng-show="isOpen&&cart.totalCount>0">
 				<div class="swiper-container" id="cartSwiper">
 					<div class="swiper-wrapper">
 						<div class="swiper-slide">
 							<div class="table w100">
-								<div class="row" >
-									<div class="cell">熏鸡肉沙拉</div>
+								<div class="row" ng-repeat="meal in cart.meals">
+									<div class="cell" ng-bind="meal.mealName"></div>
 									<div class="cell">
-										&yen;<span class="ml2 f120 fb">23</span>
+										&yen;<span class="ml2 f120 fb" ng-bind="meal.price"></span>
 									</div>
 									<div class="cell tr">
 										<div class="option-cart fr">
-											<div class="btn-cart in fr">
-												<a class="jian cart-num-btn"></a>
-												<span class="count ">1</span>
-												<a class="jia cart-num-btn"></a>
+											<div class="btn-cart in fr incart">
+												<a class="jian cart-num-btn" ng-click="updateMealCount(false, meal)"></a>
+												<span class="count " ng-bind="meal.count"></span>
+												<a class="jia cart-num-btn" ng-click="updateMealCount(true, meal)></a>
 											</div>
 										</div>
 									</div>
@@ -120,7 +120,7 @@
 			<div class="bottom">
 				<div class="table w100">
 					<div class="cell total tc fb f120" >
-						共计：&yen;<span id="total_price">0</span>元</div>
+						共计：&yen;<span id="total_price" ng-bind="meal.totalPrice"></span>元</div>
 					<div class="cell tr">
 						<a href="orderConfirm.html" class="btn-toPay">选好了</a>
 					</div>
